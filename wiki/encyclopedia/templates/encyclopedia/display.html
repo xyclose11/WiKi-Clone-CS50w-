@@ -1,0 +1,25 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {{ entryName }}
+{% endblock %}
+
+{% block body %}
+    {% autoescape off %} 
+        {{ entry }}
+        <form action="{% url 'encyclopedia:edit' %}" id="editForm" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="entryTitle" value="{{ entryName }}" form="editForm">
+            <input type="submit" value="Edit">
+        </form>
+       
+    {% endautoescape %}
+    <ul>
+        {% for entry in entriesSearch %}
+            <li><a href="{% url 'encyclopedia:display' entry %}">{{ entry }}</a></li>
+
+        {% endfor %}
+    </ul>
+
+
+{% endblock %}
